@@ -15,9 +15,13 @@ install_dependencies:
   artifacts:
     paths:
       - node_modules/
+  tags:
+    - local-docker
 
 test:
   stage: test
   needs: [install_dependencies]
   script:    
     - npm test
+  tags:
+    - local-docker
