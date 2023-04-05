@@ -1,8 +1,4 @@
-'use strict';
-
-// vi: syntax=javascript ts=4
-
-const RNDC_Protocol = require('./lib/protocol');
+import RNDC_Protocol from './lib/protocol';
 
 /**
  * Makes a connection to the given host and port and initiates the
@@ -13,8 +9,6 @@ const RNDC_Protocol = require('./lib/protocol');
  * @param {string} algo - the rndc shared algorithm (e.g. "sha256")
  * @returns {RNDC_Protocol} - an RDNC_Protocol session object
  */
-function connect(host, port, key, algo) {
+export const connect = function(host, port, key, algo) {
 	return new RNDC_Protocol(host, port, key, algo);
-}
-
-module.exports = { connect };
+} 

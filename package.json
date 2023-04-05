@@ -1,8 +1,9 @@
 {
-  "name": "bind9-rndc",
-  "version": "0.9.2",
-  "description": "client library for the BIND9 DNS server's RNDC management protocol",
+  "name": "bind9-rndc-esm",
+  "version": "0.0.1",
+  "description": "Fork of v0.9.2 of client library for the BIND9 DNS server's RNDC management protocol",
   "main": "index.js",
+  "type":"module",
   "scripts": {
     "test": "mocha"
   },
@@ -11,14 +12,14 @@
     "rndc",
     "dns"
   ],
-  "author": "Ray Bellis <ray@isc.org> (https://www.isc.org/)",
+  "author": "Ray Bellis <ray@isc.org> (https://www.isc.org/) and Ben Robinson",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/isc-projects/bind9-rndc-node.git"
+    "url": "https://github.com/clickonben/bind9-rndc-node.git"
   },
   "devDependencies": {
-    "documentation": "^5.3.5",
-    "mocha": "^4.0.1"
+    "documentation": "^14.0.1",
+    "mocha": "^10.2.0"
   }
 }

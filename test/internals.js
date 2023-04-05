@@ -1,8 +1,8 @@
 // vi: syntax=javascript ts=4
 
-const assert = require('assert');
+import assert from 'assert';
 
-const internals = require('../lib/internals');
+import internals from '../lib/internals.js';
 
 describe('RNDC_Internals', () => {
 

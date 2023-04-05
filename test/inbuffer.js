@@ -1,8 +1,7 @@
 // vi: syntax=javascript ts=4
 
-const assert = require('assert');
-
-const InBuffer = require('../lib/inbuffer');
+import assert from 'assert';
+import InBuffer from '../lib/inbuffer.js';
 
 describe('InBuffer', () => {
 
