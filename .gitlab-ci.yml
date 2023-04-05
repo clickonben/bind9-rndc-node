@@ -1,10 +1,23 @@
-include:
-  - template: Auto-DevOps.gitlab-ci.yml
+image: node:latest
 
-build:
-  tags:
-    - local
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - build
+  - test  
+
+install_dependencies:
+  stage: build
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
 
 test:
-  tags: 
-    - local
+  stage: test
+  needs: [install_dependencies]
+  script:    
+    - npm test
