@@ -1,0 +1,10 @@
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
+
+build:
+  tags:
+    - local
+
+test:
+  tags: 
+    - local
