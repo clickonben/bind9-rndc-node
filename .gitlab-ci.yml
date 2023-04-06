@@ -8,7 +8,7 @@ stages:
   - build
   - test
   - deploy
-  
+
 install_dependencies:
   stage: build
   script:
@@ -27,11 +27,26 @@ test:
   tags:
     - local-docker
 
-deploy:
+bump_version:
   stage: deploy
   needs: [install_dependencies, test]
   script:
-    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">.npmrc
+    - git fetch origin
+    - git reset --hard origin/${CI_COMMIT_REF_NAME}
+    - git config --global user.name "$GITLAB_USER_NAME"
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - npm version patch -m "Bump version to %s [skip ci]"
+    - git remote set-url origin git@build.click-on.co.uk:ben/bind9-rndc-node.git
+    - git push origin HEAD:${CI_COMMIT_REF_NAME}    
+  tags:
+    - local-shell        
+
+publish:
+  stage: deploy
+  needs: [install_dependencies, test, bump_version]
+  script:     
+    - echo "@ben:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc      
+    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">>.npmrc
     - npm publish
   tags:
     - local-docker        
