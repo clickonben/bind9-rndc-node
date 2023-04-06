@@ -6,8 +6,9 @@ cache:
 
 stages:
   - build
-  - test  
-
+  - test
+  - deploy
+  
 install_dependencies:
   stage: build
   script:
