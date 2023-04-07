@@ -1,4 +1,4 @@
-import RNDC_Protocol from './lib/protocol';
+import RNDC_Protocol from './lib/protocol.js';
 
 /**
  * Makes a connection to the given host and port and initiates the

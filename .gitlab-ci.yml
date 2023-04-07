@@ -7,9 +7,10 @@ cache:
 stages:
   - build
   - test
+  - debug
   - deploy
 
-install_dependencies:
+build:
   stage: build
   script:
     - npm ci
@@ -21,32 +22,38 @@ install_dependencies:
 
 test:
   stage: test
-  needs: [install_dependencies]
+  needs: [build]
   script:    
     - npm test
   tags:
     - local-docker
 
-bump_version:
+deploy:
   stage: deploy
-  needs: [install_dependencies, test]
+  needs: [build, test]
   script:
     - git fetch origin
     - git reset --hard origin/${CI_COMMIT_REF_NAME}
     - git config --global user.name "$GITLAB_USER_NAME"
     - git config --global user.email "$GITLAB_USER_EMAIL"
     - npm version patch -m "Bump version to %s [skip ci]"
-    - git remote set-url origin git@build.click-on.co.uk:ben/bind9-rndc-node.git
+    - git remote set-url origin https://gitlab:${GIT_PUSH_TOKEN}@${CI_SERVER_HOST}/ben/bind9-rndc-node.git
     - git push origin HEAD:${CI_COMMIT_REF_NAME}    
-  tags:
-    - local-shell        
-
-publish:
-  stage: deploy
-  needs: [install_dependencies, test, bump_version]
-  script:     
     - echo "@ben:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc      
     - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">>.npmrc
     - npm publish
   tags:
-    - local-docker        
+    - local-docker  
+
+debug:
+  stage: debug
+  script:
+    - git remote -v
+    - git log --oneline -n 20
+    - git tag
+    - pwd
+    - ls -la .git
+  only:
+    - main
+  tags:
+    - local-docker                
