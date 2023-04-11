@@ -9,6 +9,7 @@ import RNDC_Protocol from './lib/protocol.js';
  * @param {string} algo - the rndc shared algorithm (e.g. "sha256")
  * @returns {RNDC_Protocol} - an RDNC_Protocol session object
  */
-export const connect = function(host, port, key, algo) {
+export default { 
+	create: function(host, port, key, algo) {
 	return new RNDC_Protocol(host, port, key, algo);
-} 
+}};

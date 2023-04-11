@@ -2,3 +2,4 @@
 test/
 .vscode/
 app.js
+package-lock.json
